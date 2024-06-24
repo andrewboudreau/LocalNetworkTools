@@ -20,11 +20,12 @@ else
 
 void RunServer()
 {
+    string host = Dns.GetHostName();
     int port = 13000;
+
     TcpListener server = new(IPAddress.Any, port);
     server.Start();
-
-    Console.WriteLine("Server is running...");
+    Console.WriteLine($"Server listening on {host}:{port}");
     Console.WriteLine("Waiting for a connection...");
 
     // Broadcast presence
@@ -59,8 +60,9 @@ void RunClient()
 
     if (string.IsNullOrEmpty(serverIp))
     {
-        Console.WriteLine("Server not found.");
-        return;
+        serverIp = "192.168.50.76";
+        Console.WriteLine("Server not found using 192.168.50.76");
+        //return;
     }
 
     using TcpClient client = new(serverIp, port);
