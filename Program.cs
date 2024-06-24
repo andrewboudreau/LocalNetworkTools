@@ -72,7 +72,7 @@ void RunClient()
     Console.WriteLine("Enter a message to send, or type 'exit' to quit:");
 
     string? message;
-    while ((message = Console.ReadLine()) != null && message.ToLower() != "exit")
+    while ((message = Console.ReadLine()) != null && !message.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
     {
         byte[] data = Encoding.UTF8.GetBytes(message);
         stream.Write(data, 0, data.Length);
@@ -105,6 +105,10 @@ string DiscoverServer(int port)
         }
     }
     catch (SocketException ex)
+    {
+        return $"Exception: {ex.Message}";
+    }
+    catch (Exception ex)
     {
         return $"Exception: {ex.Message}";
     }
